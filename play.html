@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      * {box-sizing: border-box}
+      
+      .all {
+        min-height: 1700px;
+      }
+      
+      .header {
+        text-align: center;
+        font: bold 2.5rem Courier, monospace;
+        flex: 100%;
+      }
+
+      .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .main {
+        width: 60%;
+        float: left;
+      }
+      
+      .sidebar {
+        width: 40%;
+        float: left;
+      }
+      
+      .main > div {
+        position: relative;
+        border: 4px solid;
+        margin: 5px;
+        width: 30%;
+        height: 300px;
+        background: pink;
+      }
+      
+      .main > div p {
+        text-align: center;
+        font: italic 2rem fantasy;
+        margin-top: 8%;
+      }
+      
+      .frame {
+        margin: 5% auto;
+        width: 90%;
+        height: 70%;
+        border: 2px solid;
+      }
+      
+      .sidebar div img {
+        display: block;
+        width: 100%;
+        transition: 300ms transform;
+        z-index: 10;
+      }
+      
+      .sidebar > div {
+        width: 40%;
+
+      }
+      
+      img:hover {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  
+  <body>
+    <div class = 'all'>
+      <div class = 'header flex-container'>
+        <h1>Guess Party Animal Names</h1>
+        <div id = 'hehe'></div>
+      </div>
+      <div class = 'main flex-container'>
+        <div>
+          <div class = 'frame'>
+          </div>
+          <p>Carrot</p>
+        </div>
+        <div>
+          <div class = 'frame'></div>
+          <p>Coco</p>
+        </div>
+        <div>
+          <div class = 'frame'></div>
+          <p>Fluffy</p>
+        </div>
+        <div>
+          <div class = 'frame'></div>
+          <p>Karatan</p>
+        </div>
+        <div>
+          <div class = 'frame'></div>
+          <p>Kato</p>
+        </div>
+        <div>
+          <div class = 'frame'></div>
+          <p>Kiko</p>
+        </div>
+        <div>
+          <div class = 'frame'></div>
+          <p>Machitto</p>
+        </div>
+        <div>
+          <div class = 'frame'></div>
+          <p>Nemo</p>
+        </div>
+        <div>
+          <div class = 'frame'></div>
+          <p>Otter</p>
+        </div>
+        <div>
+          <div class = 'frame'></div>
+          <p>Uni</p>
+        </div>
+        <div>
+          <div class = 'frame'></div>
+          <p>Underbite</p>
+        </div>
+        
+        
+      </div>
+      <div class = 'sidebar flex-container'>
+        <div>
+          <img src = 'partyAnimalAvators/Carrot.png' alt = 'Carrot' class = 'draggable'>
+        </div>
+        <div>
+          <img src = 'partyAnimalAvators/Coco.png' alt = 'Coco'  class = 'draggable'>
+        </div>
+        <div>
+          <img src = 'partyAnimalAvators/Fluffy.png' alt = 'Fluffy' class = 'draggable'>
+        </div>
+        <div>
+          <img src = 'partyAnimalAvators/Karatan.png' alt = 'Karatan' class = 'draggable'>
+        </div>
+        <div>
+          <img src = 'partyAnimalAvators/Kato.png' alt = 'Kato' class = 'draggable'>
+        </div>
+        <div>
+          <img src = 'partyAnimalAvators/kiko.png' alt = 'Kiko' class = 'draggable'>
+        </div>
+        <div>
+          <img src = 'partyAnimalAvators/Machitto.png' alt = 'Machitto' class = 'draggable'>
+        </div>
+        <div>
+          <img src = 'partyAnimalAvators/Nemo.png' alt = 'Nemo' class = 'draggable'>
+        </div>
+        <div>
+          <img src = 'partyAnimalAvators/Otter.png' alt = 'Otter' class = 'draggable'>
+        </div>
+        <div>
+          <img src = 'partyAnimalAvators/Uni.png' alt = 'Uni' class = 'draggable'>
+        </div>
+        <div>
+          <img src = 'partyAnimalAvators/Underbite.png' alt = 'Underbite' class = 'draggable'>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      document.onmousedown = function(event) {
+        
+        const target = event.target.closest('img.draggable');
+        
+        if (!target) return;
+        
+        document.ondragstart = () => false;
+        
+        const shiftX = event.x - target.getBoundingClientRect().left;
+        const shiftY = event.y - target.getBoundingClientRect().top;
+        
+        function moveAt(pageX, pageY) {
+          target.style.left = pageX - shiftX + 'px';
+          target.style.top = pageY - shiftY + 'px';
+        }
+        
+        target.style.position = 'absolute';
+        target.style.width = '15%';
+        moveAt(event.pageX, event.pageY)
+        document.body.append(target);
+
+        // find cursor location within image
+
+        let underTarget;
+        
+        // functions for moving animals
+        function onMouseMove(event) {
+          target.style.left = event.pageX - shiftX + 'px';
+          target.style.top = event.pageY - shiftY + 'px';
+          
+          let windowHeight = document.documentElement.clientHeight;
+          let bottom = target.getBoundingClientRect().bottom;
+          let top = target.getBoundingClientRect().top;
+          
+          if (bottom > windowHeight) window.scrollBy(0, 10);
+          if (top < 0) window.scrollBy(0, -10);
+/*          
+          hehe.innerHTML = `offsetTop: ${bottom}
+          bodyHeight: ${top}`;*/
+        }
+        
+        function onMouseUp() {
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup', onMouseUp);
+        }
+        
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+        
+      }
+      
+      
+    </script>
+  </body>
+</html>
